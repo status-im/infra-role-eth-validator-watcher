@@ -1,0 +1,37 @@
+---
+eth_val_watcher_service_name: 'eth-validator-watcher'
+eth_val_watcher_service_path: '/docker/{{ eth_val_watcher_service_name }}'
+eth_val_watcher_user:         'dockremap'
+eth_val_watcher_group:        'docker'
+
+# Docker
+eth_val_watcher_cont_image: 'ghcr.io/kilnfi/eth-validator-watcher:{{ eth_val_watcher_cont_tag }}'
+eth_val_watcher_cont_tag: '1.0.1-beta.1'
+eth_val_watcher_cont_name: 'eth-validator-watcher'
+eth_val_watcher_cont_port: 8000
+eth_val_watcher_cont_vol_config: '{{ eth_val_watcher_service_path }}/config'
+
+# Configuration
+eth_val_watcher_bn_network: ~
+eth_val_watcher_bn_url: 'http://beacon:5051'
+eth_val_watcher_bn_validators: []
+eth_val_watcher_network: 'mainnnet'
+eth_val_watcher_bn_timeout_sec: 90
+# - public_key: '0x...'
+#   labels: ['tag1', 'tag2']
+
+# Consul Service
+eth_val_watcher_consul_config_name: '{{ eth_val_watcher_service_name | replace("-", "_") }}'
+eth_val_watcher_consul_service_name: '{{ eth_val_watcher_service_name }}'
+eth_val_watcher_consul_tags: ['monitoring', 'eth', 'validators']
+eth_val_watcher_consul_check_disabled: false
+eth_val_watcher_consul_check_interval: '60s'
+eth_val_watcher_consul_check_timeout: '10s'
+eth_val_watcher_consul_success_before_passing: 0
+eth_val_watcher_consul_failures_before_warning: 5
+eth_val_watcher_consul_failures_before_critical: 10
+
+# general container management
+compose_recreate: 'auto'
+compose_state: 'present'
+compose_pull: 'always'

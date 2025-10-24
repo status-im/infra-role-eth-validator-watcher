@@ -1,0 +1,21 @@
+---
+- name: Create service directories
+  file:
+    path:  '{{ item }}'
+    state: 'directory'
+    owner: 'dockremap'
+    group: 'docker'
+    mode:  '0750'
+  with_items:
+    - '{{ eth_val_watcher_service_path }}'
+    - '{{ eth_val_watcher_cont_vol_config }}'
+
+- name: 'Create config file'
+  template:
+    src: 'config.yml.j2'
+    dest: '{{ eth_val_watcher_cont_vol_config }}/config.yml'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: '0660'
+
+

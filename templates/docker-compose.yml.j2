@@ -1,0 +1,16 @@
+#vim:ft=yml
+---
+services:
+  watcher:
+    image: '{{ eth_val_watcher_cont_image }}'
+    container_name: '{{ eth_val_watcher_cont_name }}'
+    ports:
+      - '{{ eth_val_watcher_cont_port }}:{{ eth_val_watcher_cont_port }}'
+    volumes:
+      - '{{ eth_val_watcher_cont_vol_config }}:/etc/eth-validator-watcher'
+    networks: ['{{ eth_val_watcher_bn_network }}']
+    command: '--config /etc/eth-validator-watcher/config.yml'
+
+networks:
+  {{ eth_val_watcher_bn_network | mandatory }}:
+    external: true

@@ -1,0 +1,15 @@
+---
+- name: 'Create compose file'
+  template:
+    src: 'docker-compose.yml.j2'
+    dest: '{{ eth_val_watcher_service_path }}/docker-compose.yml'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: '0664'
+
+- name: 'Create containers'
+  community.docker.docker_compose_v2:
+    project_src: '{{ eth_val_watcher_service_path }}'
+    recreate: '{{ compose_recreate }}'
+    pull: '{{ compose_pull }}'
+    state: '{{ compose_state }}'

@@ -1,0 +1,23 @@
+---
+- name: Create Consul service definition
+  include_role:
+    name: infra-role-consul-service
+  vars:
+    consul_config_name:                      '{{ eth_val_watcher_consul_config_name }}'
+    consul_default_check_disabled:           '{{ eth_val_watcher_consul_check_disabled }}'
+    consul_default_check_interval:           '{{ eth_val_watcher_consul_check_interval }}'
+    consul_default_check_timeout:            '{{ eth_val_watcher_consul_check_timeout }}'
+    consul_default_success_before_passing:   '{{ eth_val_watcher_consul_success_before_passing }}'
+    consul_default_failures_before_warning:  '{{ eth_val_watcher_consul_failures_before_warning }}'
+    consul_default_failures_before_critical: '{{ eth_val_watcher_consul_failures_before_critical }}'
+    consul_services:
+      - id:      '{{ eth_val_watcher_cont_name }}'
+        name:    '{{ eth_val_watcher_consul_service_name }}-metrics'
+        tags:    '{{ eth_val_watcher_consul_tags + ["metrics"] }}'
+        port:    '{{ eth_val_watcher_cont_port }}'
+        address: '{{ ansible_local.wireguard.address }}'
+        checks:
+          - id:   '{{ eth_val_watcher_consul_service_name }}-metrics-health'
+            name: ' Healthcheck'
+            type: 'http'
+            http: 'http://localhost:{{ eth_val_watcher_cont_port }}/metrics'
