@@ -32,6 +32,6 @@ eth_val_watcher_consul_failures_before_warning: 5
 eth_val_watcher_consul_failures_before_critical: 10
 
 # general container management
-compose_recreate: 'auto'
+compose_recreate: 'always'
 compose_state: 'present'
 compose_pull: 'always'
