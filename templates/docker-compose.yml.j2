@@ -9,6 +9,7 @@ services:
     volumes:
       - '{{ eth_val_watcher_cont_vol_config }}:/etc/eth-validator-watcher'
     networks: ['{{ eth_val_watcher_bn_network }}']
+    restart: on-failure
     command: '--config /etc/eth-validator-watcher/config.yml'
 
 networks:
